@@ -1,0 +1,10 @@
+{
+  "name": "taekwondo-online-functions",
+  "description": "Secure server-side functions for the online taekwondo judging room",
+  "main": "index.js",
+  "engines": { "node": "20" },
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^6.1.1"
+  }
+}
