@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#101827"><title>سامانه داوری آنلاین تکواندو</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="brand">🥋 <span>سامانه داوری تکواندو</span></div><span id="connection" class="pill">در حال اتصال…</span></header>
+<main>
+<section id="welcome" class="card welcome">
+<h1>داوری آنلاین مسابقه</h1><p class="muted">اتاق بسازید یا با کد مسابقه به تیم داوری بپیوندید.</p>
+<div class="grid2"><div class="subcard"><h2>ایجاد مسابقه</h2><label>نام ورزشکار قرمز<input id="redName" value="ورزشکار قرمز" maxlength="40"></label><label>نام ورزشکار آبی<input id="blueName" value="ورزشکار آبی" maxlength="40"></label><button id="createBtn" class="primary">ساخت اتاق داوری</button></div>
+<div class="subcard"><h2>ورود داور</h2><label>کد اتاق<input id="joinCode" placeholder="مثلاً A7K9Q2" maxlength="8" autocapitalize="characters"></label><label>نام داور<input id="judgeName" placeholder="نام یا شماره داور" maxlength="40"></label><button id="joinBtn" class="secondary">ورود به اتاق</button></div></div>
+<div id="welcomeMsg" class="message" aria-live="polite"></div>
+<p class="tiny">برای اجرای آنلاین باید یک بار پروژه Firebase خودتان را تنظیم و سایت را منتشر کنید؛ راهنما داخل بسته قرار دارد.</p>
+</section>
+<section id="match" class="hidden">
+<div class="roombar card"><div><span class="muted">کد مسابقه</span><strong id="roomCodeDisplay">—</strong></div><div><span class="muted">نفرات تیم داوری</span><strong id="judgeCount">0</strong></div><button id="copyBtn" class="smallbtn">کپی کد</button><button id="leaveBtn" class="smallbtn danger">خروج</button></div>
+<div class="scoreboard">
+<article class="fighter red"><div class="corner">قرمز</div><div id="redNameDisplay" class="fightername">قرمز</div><div id="redScore" class="score">0</div><div class="penalties">کیونگو: <b id="redKyonggo">0</b> <span>•</span> گام‌جوم: <b id="redGamjeom">0</b></div></article>
+<div class="center"><div class="round" id="roundDisplay">راند ۱</div><div id="timer" class="timer">02:00</div><div id="timerState" class="timerstate">آماده</div><div class="timerbuttons"><button id="startTimer" class="primary">شروع</button><button id="pauseTimer" class="secondary">توقف</button><button id="resetTimer" class="smallbtn">تنظیم مجدد</button></div><div class="roundbuttons"><button id="prevRound" class="smallbtn">راند قبل</button><button id="nextRound" class="smallbtn">راند بعد</button></div></div>
+<article class="fighter blue"><div class="corner">آبی</div><div id="blueNameDisplay" class="fightername">آبی</div><div id="blueScore" class="score">0</div><div class="penalties">کیونگو: <b id="blueKyonggo">0</b> <span>•</span> گام‌جوم: <b id="blueGamjeom">0</b></div></article>
+</div>
+<div class="grid2 actiongrid"><section class="card"><h2>ثبت درخواست امتیاز</h2><p class="muted smalltext">درخواست پس از تأیید دو داور مستقل ثبت می‌شود.</p><div class="sidebuttons"><button class="redbtn" data-side="red" data-type="score" data-points="1">قرمز +۱</button><button class="redbtn" data-side="red" data-type="score" data-points="2">قرمز +۲</button><button class="redbtn" data-side="red" data-type="score" data-points="3">قرمز +۳</button><button class="redbtn" data-side="red" data-type="score" data-points="4">قرمز +۴</button><button class="redbtn" data-side="red" data-type="score" data-points="5">قرمز +۵</button></div><div class="sidebuttons"><button class="bluebtn" data-side="blue" data-type="score" data-points="1">آبی +۱</button><button class="bluebtn" data-side="blue" data-type="score" data-points="2">آبی +۲</button><button class="bluebtn" data-side="blue" data-type="score" data-points="3">آبی +۳</button><button class="bluebtn" data-side="blue" data-type="score" data-points="4">آبی +۴</button><button class="bluebtn" data-side="blue" data-type="score" data-points="5">آبی +۵</button></div><div class="sidebuttons penaltiesbuttons"><button class="yellowbtn" data-side="red" data-type="kyonggo">کیونگو قرمز</button><button class="yellowbtn" data-side="blue" data-type="kyonggo">کیونگو آبی</button><button class="darkbtn" data-side="red" data-type="gamjeom">گام‌جوم قرمز</button><button class="darkbtn" data-side="blue" data-type="gamjeom">گام‌جوم آبی</button></div><div id="proposalMsg" class="message"></div></section>
+<section class="card"><div class="sectionhead"><h2>درخواست‌های تأیید</h2><span class="pill" id="pendingCount">0 در انتظار</span></div><div id="pendingList" class="list empty">درخواستی برای تأیید وجود ندارد.</div><h2 class="historytitle">تاریخچه مسابقه</h2><div id="historyList" class="list empty">هنوز رویدادی ثبت نشده است.</div></section></div>
+<section class="card judgescard"><div class="sectionhead"><h2>تیم داوری آنلاین</h2><span class="muted smalltext">هر داور با شناسه جداگانه وارد می‌شود.</span></div><div id="judgesList" class="judgeslist"></div><div id="adminTools" class="admintools hidden"><h3>تنظیمات مدیر مسابقه</h3><div class="grid2"><label>زمان راند (ثانیه)<input id="durationInput" type="number" min="30" max="600" value="120"></label><button id="saveDuration" class="secondary">ذخیره زمان راند</button></div><div class="grid2"><label>نام ورزشکار قرمز<input id="editRedName" maxlength="40"></label><label>نام ورزشکار آبی<input id="editBlueName" maxlength="40"></label></div><button id="saveNames" class="secondary">ذخیره نام‌ها</button><button id="finishMatch" class="dangerbtn">پایان مسابقه</button></div></section>
+<div id="matchMsg" class="message"></div>
+</section>
+</main><footer>سامانه داوری آنلاین • ابزار کمکی؛ پیش از استفاده رسمی، قوانین و روند امتیازدهی را بررسی کنید.</footer>
+<script type="module" src="app.js"></script>
+</body></html>
